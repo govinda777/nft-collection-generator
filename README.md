@@ -4,6 +4,29 @@
 
 This is a simple Node.js project that uses a list of pre-configured traits and image layers to generate a unique set of images and metadata files for a collection of NFTs. You would be able to create your own collection by updating the traits configuration and the image layers.
 
+## Project Objectives
+
+The main goal of this project is to provide a free and accessible tool for artists and creators to generate their own NFT collections without needing extensive programming knowledge.
+
+The key objectives are:
+
+- **Simplicity:** To offer a straightforward setup and execution process.
+- **Customization:** To allow for a high degree of customization of traits and metadata through a simple configuration file.
+- **Compatibility:** To generate metadata that is compatible with major NFT marketplaces like OpenSea.
+- **Community-Driven:** To be an open-source project that can be extended and improved by its users.
+
+## Roadmap
+
+Here are some of the planned features and improvements for the future. Contributions are welcome!
+
+- [ ] **IPFS Integration:** Automatically upload generated images to IPFS and use the CIDs in the metadata files.
+- [ ] **Web Interface:** Create a simple web-based user interface for managing the configuration and generating the collection.
+- [ ] **Support for Other Blockchains:** Add support for metadata standards of other blockchains like Solana.
+- [ ] **Advanced Trait Dependencies:** Implement more complex logic for trait dependencies (e.g., if trait A has value X, then trait B must have value Y or Z).
+- [ ] **Gas-less Minting:** Integrate with services that allow for gas-less minting of the generated NFTs.
+
+See the open issues for a full list of proposed features (and known issues).
+
 ## Getting Started
 
 ### Prerequisites
@@ -135,6 +158,19 @@ Before modifying the _traits_ list, please go through the next important instruc
 - Depending on the amount of _traits_ that you have and their amount of _options_, you will have a maximum amount of unique tokens that could be generated. It isn't recommended generating the exact maximum possible amount of unique tokens, because the script will keep searching no matter the odds until it finds each one of the combinations, leaving the weighting factors useless. As a recommendation, I would say that if you want to generate N tokens, then create a list of _traits_ that can give you **at least** 2N tokens. The process will let you know if the value of `TOTAL_TOKENS` is too big when you try to run it.
 
 > Running the command `npm test` will verify that these set of rules are taken into account within your current configuration, and that the generated metadata would follow the standards. Use it!
+
+## Contributing
+
+Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+
+If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+Don't forget to give the project a star! Thanks again!
+
+1. Fork the Project
+2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the Branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
 
 ## License
 
