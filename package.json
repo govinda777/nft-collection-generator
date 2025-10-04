@@ -22,7 +22,7 @@
   },
   "homepage": "https://github.com/manuelpires/nft-collection-generator#readme",
   "dependencies": {
-    "canvas": "^2.8.0",
+    "canvas": "^2.11.2",
     "gif-encoder-2": "^1.0.5"
   },
   "devDependencies": {
