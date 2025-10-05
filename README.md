@@ -27,6 +27,10 @@ Here are some of the planned features and improvements for the future. Contribut
 
 See the open issues for a full list of proposed features (and known issues).
 
+## Live Demo
+
+A live version of the documentation and a gallery of generated NFTs can be found [here](./docs/index.html).
+
 ## Getting Started
 
 ### Prerequisites
