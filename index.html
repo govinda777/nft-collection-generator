@@ -6,23 +6,60 @@
     <title>Amazonia Crypto Animals</title>
     <style>
         body {
-            font-family: sans-serif;
-            background-color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: #333;
             margin: 0;
             padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
         }
         header {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
-            margin-bottom: 40px;
         }
         h1 {
             font-size: 3em;
             color: #2c3e50;
+            margin-bottom: 15px;
         }
         p {
             font-size: 1.2em;
             color: #7f8c8d;
+        }
+        .members-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1.1em;
+            margin: 20px 0;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+        }
+        .members-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
+        }
+        .gallery-section {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+        .gallery-section h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
         }
         .gallery {
             display: grid;
@@ -35,37 +72,56 @@
             padding: 10px;
             background-color: #fff;
             text-align: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .nft:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
         }
         .nft img {
             max-width: 100%;
             border-radius: 5px;
         }
+        ol, ul {
+            text-align: left;
+            max-width: 600px;
+            margin: 20px auto;
+        }
+        li {
+            margin: 10px 0;
+            color: #495057;
+        }
     </style>
 </head>
 <body>
-    <header>
-        <h1>Welcome to the Amazonia Crypto Animals Community!</h1>
-        <p>A unique collection of procedurally generated animal NFTs from the heart of the Amazon rainforest.</p>
-        <h2>How to become a member:</h2>
-        <ol>
-            <li>Purchase an NFT from the Alpha collection.</li>
-            <li>Collect the airdrops.</li>
-            <li>Sell your NFT on the world's largest marketplaces.</li>
-        </ol>
-        <h2>Membership benefits:</h2>
-        <ul>
-            <li>Access to a VIP area.</li>
-            <li>Voting rights in the community.</li>
-            <li>Membership to our YouTube channel.</li>
-        </ul>
-    </header>
+    <div class="container">
+        <header>
+            <h1>🌿 Welcome to the Amazonia Crypto Animals Community!</h1>
+            <p>A unique collection of procedurally generated animal NFTs from the heart of the Amazon rainforest.</p>
+            
+            <a href="members.html" class="members-btn">🔐 Access Members Area</a>
+            
+            <h2>How to become a member:</h2>
+            <ol>
+                <li>Purchase an NFT from the Alpha collection.</li>
+                <li>Collect the airdrops.</li>
+                <li>Sell your NFT on the world's largest marketplaces.</li>
+            </ol>
+            <h2>Membership benefits:</h2>
+            <ul>
+                <li>Access to a VIP area.</li>
+                <li>Voting rights in the community.</li>
+                <li>Membership to our YouTube channel.</li>
+            </ul>
+        </header>
 
-    <main>
-        <h2>NFT Gallery</h2>
-        <div class="gallery">
-            <!-- NFT items will be dynamically inserted here -->
-        </div>
-    </main>
+        <main class="gallery-section">
+            <h2>NFT Gallery</h2>
+            <div class="gallery">
+                <!-- NFT items will be dynamically inserted here -->
+            </div>
+        </main>
+    </div>
 
     <script src="app.js"></script>
 </body>
