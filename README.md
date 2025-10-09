@@ -1,5 +1,43 @@
 # NFT Collection Generator
 
+## Visão Geral (PT-BR)
+
+Este projeto em Node.js gera coleções de NFTs a partir de camadas de imagens e uma configuração de atributos (traits). Você pode personalizar a coleção editando `config.js` e adicionando/removendo camadas em `traits/`.
+
+### Sumário
+
+- **[Como Funciona](#como-funciona)**
+- **[Diagrama (Mermaid)](#diagrama-mermaid)**
+- **[Getting Started](#getting-started)**
+- **[Usage](#usage)**
+- **[Create Your Own Collection](#create-your-own-collection)**
+- **[Contributing](#contributing)**
+- **[License](#license)**
+
+## Como Funciona
+1. **Configuração**: edite `config.js` para ajustar `TOTAL_TOKENS`, dimensões de imagem, `IMAGES_BASE_URI` e `ORDERED_TRAITS_LIST`.
+2. **Camadas (traits)**: organize os PNGs por trait dentro de `traits/` na ordem em que devem ser compostos.
+3. **Geração**: rode `npm run build` para criar imagens e metadados JSON compatíveis com a OpenSea.
+4. **Pós-processamento (opcional)**: use os scripts de utilidade para atualizar base URI, gerar GIFs e calcular hashes.
+
+## Diagrama (Mermaid)
+
+```mermaid
+flowchart LR
+  A[Editar config.js\n- TOTAL_TOKENS\n- IMAGES_*\n- ORDERED_TRAITS_LIST] --> B[Camadas em traits/\nPNGs por trait]
+  B --> C[index.js\nGerador]
+  C --> D[Imagens geradas\noutput/]
+  C --> E[Metadados JSON\noutput/]
+  D --> F[npm run create-gif\n(opcional)]
+  E --> G[npm run update-base-uri\n(opcional)]
+  D --> H[npm run calculate-hashes\n(opcional)]
+  subgraph Scripts
+    F
+    G
+    H
+  end
+```
+
 ## About
 
 This is a simple Node.js project that uses a list of pre-configured traits and image layers to generate a unique set of images and metadata files for a collection of NFTs. You would be able to create your own collection by updating the traits configuration and the image layers.
