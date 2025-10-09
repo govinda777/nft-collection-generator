@@ -105,3 +105,6 @@ dist
 
 # macOS .DS_Store
 .DS_Store
+images/
+metadata/
+hashes/
