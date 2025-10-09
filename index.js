@@ -1,6 +1,6 @@
 const crypto = require("crypto");
 const { createCanvas, loadImage } = require("canvas");
-const { rmdirSync, mkdirSync, writeFileSync } = require("fs");
+const { existsSync, rmdirSync, mkdirSync, writeFileSync } = require("fs");
 const {
   DEFAULT_IMAGES_PATH,
   DEFAULT_METADATA_PATH,
@@ -109,7 +109,9 @@ const generateTokensFiles = async (tokens) => {
 };
 
 const directoryGuard = (directory) => {
-  rmdirSync(directory, { recursive: true });
+  if (existsSync(directory)) {
+    rmdirSync(directory, { recursive: true });
+  }
   mkdirSync(directory, { recursive: true });
 };
 
