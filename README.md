@@ -1,221 +1,163 @@
-# NFT Collection Generator
+# NFT Collection Generator & Members Area
 
 ## Visão Geral (PT-BR)
 
-Este projeto em Node.js gera coleções de NFTs a partir de camadas de imagens e uma configuração de atributos (traits). Você pode personalizar a coleção editando `config.js` e adicionando/removendo camadas em `traits/`.
+Este projeto tem duas funcionalidades principais:
+
+1.  **Gerador de Coleção de NFT**: Um conjunto de scripts Node.js que gera coleções de NFTs a partir de camadas de imagens e uma configuração de atributos (traits).
+2.  **Área de Membros com Privy**: Uma interface web segura para detentores de NFTs, com autenticação via carteira Web3 usando o **[Privy](https://privy.io/)**.
 
 ### Sumário
 
 - **[Como Funciona](#como-funciona)**
 - **[Diagrama (Mermaid)](#diagrama-mermaid)**
 - **[Getting Started](#getting-started)**
-- **[Usage](#usage)**
-- **[Create Your Own Collection](#create-your-own-collection)**
+- **[Uso da Área de Membros](#uso-da-área-de-membros)**
+- **[Uso do Gerador de NFT](#uso-do-gerador-de-nft)**
+- **[Estrutura de Arquivos](#estrutura-de-arquivos)**
 - **[Contributing](#contributing)**
 - **[License](#license)**
 
 ## Como Funciona
-1. **Configuração**: edite `config.js` para ajustar `TOTAL_TOKENS`, dimensões de imagem, `IMAGES_BASE_URI` e `ORDERED_TRAITS_LIST`.
-2. **Camadas (traits)**: organize os PNGs por trait dentro de `traits/` na ordem em que devem ser compostos.
-3. **Geração**: rode `npm run build` para criar imagens e metadados JSON compatíveis com a OpenSea.
-4. **Pós-processamento (opcional)**: use os scripts de utilidade para atualizar base URI, gerar GIFs e calcular hashes.
+
+O projeto combina um back-end para geração de arte e metadados de NFT com um front-end para engajamento da comunidade.
+
+1.  **Geração de NFT**:
+    -   Edite `config.js` para definir o tamanho da coleção, metadados e a ordem dos atributos.
+    -   Organize as imagens (PNGs) em pastas dentro de `traits/`.
+    -   Execute `npm run build` para gerar as imagens e os metadados JSON.
+2.  **Área de Membros**:
+    -   A página `index.html` atua como um portal seguro.
+    -   Os usuários conectam suas carteiras Web3 (MetaMask, etc.) através do Privy para se autenticar.
+    -   Uma vez autenticados, os usuários podem ver seus NFTs da coleção, acessar benefícios exclusivos e interagir com a comunidade.
 
 ## Diagrama (Mermaid)
 
 ```mermaid
-flowchart LR
-  A[Editar config.js\n- TOTAL_TOKENS\n- IMAGES_*\n- ORDERED_TRAITS_LIST] --> B[Camadas em traits/\nPNGs por trait]
-  B --> C[index.js\nGerador]
-  C --> D[Imagens geradas\noutput/]
-  C --> E[Metadados JSON\noutput/]
-  D --> F[npm run create-gif\n(opcional)]
-  E --> G[npm run update-base-uri\n(opcional)]
-  D --> H[npm run calculate-hashes\n(opcional)]
-  subgraph Scripts
-    F
-    G
-    H
-  end
+flowchart TD
+    subgraph "Back-end: Geração de NFT"
+        A[Editar config.js] --> B[Organizar camadas em traits/]
+        B --> C{npm run build}
+        C --> D[Imagens geradas em /images]
+        C --> E[Metadados gerados em /metadata]
+    end
+
+    subgraph "Front-end: Área de Membros"
+        F[Usuário acessa index.html] --> G{Conectar Carteira com Privy}
+        G -- Sucesso --> H[Área de Membros]
+        H --> I[Visualizar NFTs]
+        H --> J[Acessar Benefícios]
+    end
+
+    D --> I
 ```
-
-## About
-
-This is a simple Node.js project that uses a list of pre-configured traits and image layers to generate a unique set of images and metadata files for a collection of NFTs. You would be able to create your own collection by updating the traits configuration and the image layers.
-
-## Project Objectives
-
-The main goal of this project is to provide a free and accessible tool for artists and creators to generate their own NFT collections without needing extensive programming knowledge.
-
-The key objectives are:
-
-- **Simplicity:** To offer a straightforward setup and execution process.
-- **Customization:** To allow for a high degree of customization of traits and metadata through a simple configuration file.
-- **Compatibility:** To generate metadata that is compatible with major NFT marketplaces like OpenSea.
-- **Community-Driven:** To be an open-source project that can be extended and improved by its users.
-
-## Roadmap
-
-Here are some of the planned features and improvements for the future. Contributions are welcome!
-
-- [ ] **IPFS Integration:** Automatically upload generated images to IPFS and use the CIDs in the metadata files.
-- [ ] **Web Interface:** Create a simple web-based user interface for managing the configuration and generating the collection.
-- [ ] **Support for Other Blockchains:** Add support for metadata standards of other blockchains like Solana.
-- [ ] **Advanced Trait Dependencies:** Implement more complex logic for trait dependencies (e.g., if trait A has value X, then trait B must have value Y or Z).
-- [ ] **Gas-less Minting:** Integrate with services that allow for gas-less minting of the generated NFTs.
-
-See the open issues for a full list of proposed features (and known issues).
 
 ## Getting Started
 
-### Prerequisites
+### Pré-requisitos
 
-- [Download and install Node.js and npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- [Node.js e npm](https://docs.npmjs.com/downloading-and-installing-node-js-and-npm)
+- Um servidor web local para evitar erros de CORS ao testar a área de membros. Recomendamos o [Live Server](https://marketplace.visualstudio.com/items?itemName=ritwickdey.LiveServer) para VS Code ou executar `python -m http.server` no diretório do projeto.
 
-### Installation
+### Instalação
 
-1. Clone the repo
+1.  Clone o repositório:
+    ```sh
+    git clone https://github.com/manuelpires/nft-collection-generator.git
+    ```
+2.  Entre no diretório e instale as dependências:
+    ```sh
+    cd nft-collection-generator
+    npm install
+    ```
 
-   ```sh
-   git clone https://github.com/manuelpires/nft-collection-generator.git
-   ```
+## Uso da Área de Membros
 
-2. Inside the repo directory install NPM packages
+A área de membros é o ponto de entrada principal para sua comunidade.
 
-   ```sh
-   npm install
-   ```
+### Executando Localmente
 
-## Usage
+1.  **Gere as imagens de amostra**:
+    ```sh
+    npm run build
+    ```
+2.  **Inicie um servidor web local**:
+    - Abra o `index.html` com a extensão Live Server do VS Code.
+    - Ou execute `python -m http.server` e acesse `http://localhost:8000` no seu navegador.
 
-There's an example configuration in the `config.js` file, and there's also some pre-defined image layers in the `traits` folder. You can test and run this project with that pre-existing configuration to see first how everything works and to see the results.
+### Funcionalidades
 
-### Test the configuration
+-   **Autenticação Segura**: Login com carteiras Web3, gerenciado pelo Privy. O App ID já está pré-configurado.
+-   **Visualização de NFTs**: Após o login, os usuários veem os NFTs que possuem (atualmente, usa dados de mock em `privy-auth.js`).
+-   **Benefícios Exclusivos**: Seções para exibir os benefícios de ser um detentor de NFT.
 
-Test the current configuration in the `config.js` file
+### Configuração para Produção
 
+O sistema de autenticação (`privy-auth.js`) já está configurado com um App ID do Privy e um fallback para um modo de simulação (mock) se o SDK do Privy não carregar.
+
+Para conectar com dados reais da blockchain, você precisará modificar `privy-auth.js` para buscar os NFTs de um usuário real em vez de usar o array `mockNFTData`.
+
+**Opções para buscar NFTs:**
+
+1.  **API do Privy**:
+    ```javascript
+    const nfts = await privy.user.wallet.getNFTs();
+    ```
+2.  **Serviços de API (Alchemy, Moralis)**:
+    ```javascript
+    const response = await fetch(`https://eth-mainnet.g.alchemy.com/v2/YOUR-API-KEY/getNFTs/?owner=${walletAddress}`);
+    const nfts = await response.json();
+    ```
+
+## Uso do Gerador de NFT
+
+Use os scripts para criar sua coleção de arte e metadados.
+
+### Testar a Configuração
+
+Verifique se o seu arquivo `config.js` está correto:
 ```sh
 npm test
 ```
 
-This will only test if the current configuration is correct or not.
+### Gerar a Coleção
 
-### Run the project
-
-Run the project with the current configuration
-
+Execute o script principal para gerar as imagens e os metadados:
 ```sh
 npm run build
 ```
+Os arquivos serão salvos nos diretórios `images/` e `metadata/`.
 
-This will execute the main script. If successful, it will:
+### Outros Scripts
 
-- Print logs with statistics about the results in the console
-- Generate a folder with all the tokens images
-- Generate a folder with all the tokens metadata files
+-   **`npm run update-base-uri`**: Atualiza o URI base das imagens em todos os arquivos de metadados.
+-   **`npm run create-gif`**: Cria um GIF animado a partir das imagens geradas.
+-   **`npm run calculate-hashes`**: Calcula o hash SHA-256 de cada imagem.
 
-### Other scripts
+## Estrutura de Arquivos
 
-#### Update images base URI
-
-After running the project, you can update the images base URI inside all generated metadata files by running:
-
-```sh
-npm run update-base-uri
 ```
-
-This will take the current value of `IMAGES_BASE_URI` inside `config.js` and use it to update all metadata files.
-
-#### Create GIF with images
-
-After running the project, you can create a GIF using the generated images:
-
-```sh
-npm run create-gif
+/
+├── index.html          # Área de membros (requer login com Privy)
+├── privy-auth.js       # Lógica de autenticação do Privy
+├── config.js           # Configuração do gerador de NFT
+├── index.js            # Script principal do gerador de NFT
+├── traits/             # Diretório para as camadas de imagem
+├── images/             # Saída das imagens geradas
+├── metadata/           # Saída dos metadados gerados
+└── package.json
 ```
-
-#### Calculate hashes of images
-
-After running the project, you can launch the following script to calculate the SHA-256 hash of every image generated and also print the final provenance hash of all of them:
-
-```sh
-npm run calculate-hashes
-```
-
-## Create Your Own Collection
-
-To create your own collection of unique tokens, you'd have to edit only the `config.js` file and update the image layers in the `traits` folder.
-
-The metadata generated by running this project should be compatible with [OpenSea's Metadata Standards](https://docs.opensea.io/docs/metadata-standards). If you are not familiarized with those standards, you should give that page a read as it would help a lot to understand how to update the `config.js` file. Also, make sure to first run the project with the example configuration and check out the generated metadata files for more clarification about the process.
-
-### Modify constants
-
-These are the constants that you'd need to update in the `config.js` file:
-
-```JS
-config.GIF_FRAMES = 10; // only if you want to generate a GIF
-config.IMAGES_BASE_URI = "https://base-uri-to-my-nft-images.com/";
-config.IMAGES_HEIGHT = 350;
-config.IMAGES_WIDTH = 350;
-config.TOKEN_NAME_PREFIX = "My NFT #";
-config.TOKEN_DESCRIPTION = "My NFT description.";
-config.TOTAL_TOKENS = 100;
-```
-
-### Modify traits list
-
-You'd also have to modify the last variable called `ORDERED_TRAITS_LIST` that contains the array of all available traits for the tokens.
-Each _trait_ has the following structure:
-
-```JS
-{
-  display?: string;
-  ignore?: boolean;
-  type?: string;
-  options: {
-    allowed?: string[];
-    forbidden?: string[];
-    image?: string;
-    value?: string | number;
-    weight: number;
-  }[]
-}
-```
-
-Before modifying the _traits_ list, please go through the next important instructions:
-
-- For every _trait_ in the list, each generated token will get **one** randomly selected _option_ (_value_ & _image_) from the _options_ list. Except if the randomly selected _option_ turns out to have a non-existent _value_, in which case the token won't get **anything** from that specific _trait_.
-- The order of the list **is important!** It will define the order in which the images should be merged on top of each other to create the final token image. Tipically, the background _trait_ should be the first in the array.
-- The random selection of the _option_ is based on its _weight_ and its optional _allowed/forbidden_ conditions. The _weight_ of an _option_ is **relative** to the _weights_ of the other items in the same _options_ array, and it should be an integer of at least 1. So if you put a _weight_ of 10 in an _option_, it should have 10 more times chances to be selected that an _option_ in the same array that has a _weight_ equal to 1.
-- If a _trait_ is marked with _ignore_, then that _trait_ won't be taken into account when defining token uniqueness. For instance, if you don't want the background of your tokens to affect their uniqueness, then you can mark that background _trait_ with `ignore: true`.
-- The optional _allowed/forbidden_ arrays should include one or more strings that match _option values_ of previous _traits_. When used, it will make this _option_ **only** allowed/forbidden for tokens that have **at least** one of those string _values_ previously selected. For reference, look at the _allowed_ and _forbidden_ arrays used as example in the `config.js` file. In this case an "Orchid" triangle would only be available for tokens with "Coral" **or** "Mint" backgrounds; and also a "Teal" triangle will **not** be available for tokens with "Robin" background.
-- Each defined _type_ inside a _trait_ should be unique.
-- If you leave a specific _trait_ without a _type_ field, it will be considered a "generic" _trait_. It's important that these kind of _traits_ don't have any _values_ in common with other _traits_ inside their _options_ array.
-- Each _image_ string should have the relative path to a specific PNG image.
-- If you don't put an _image_ field in every _option_ with a defined _value_, some of your tokens (even with unique metadata) could turn out with the same generated image.
-- The _display_ field is only meant to be used with number _values_. Read more at the [OpenSea's Metadata Standards](https://docs.opensea.io/docs/metadata-standards).
-- Depending on the amount of _traits_ that you have and their amount of _options_, you will have a maximum amount of unique tokens that could be generated. It isn't recommended generating the exact maximum possible amount of unique tokens, because the script will keep searching no matter the odds until it finds each one of the combinations, leaving the weighting factors useless. As a recommendation, I would say that if you want to generate N tokens, then create a list of _traits_ that can give you **at least** 2N tokens. The process will let you know if the value of `TOTAL_TOKENS` is too big when you try to run it.
-
-> Running the command `npm test` will verify that these set of rules are taken into account within your current configuration, and that the generated metadata would follow the standards. Use it!
 
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Contribuições são bem-vindas! Sinta-se à vontade para abrir uma issue ou enviar um pull request.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
-Don't forget to give the project a star! Thanks again!
-
-1. Fork the Project
-2. Create your Feature Branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your Changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the Branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+1.  Fork o Projeto
+2.  Crie sua Feature Branch (`git checkout -b feature/AmazingFeature`)
+3.  Commit suas Mudanças (`git commit -m 'Add some AmazingFeature'`)
+4.  Push para a Branch (`git push origin feature/AmazingFeature`)
+5.  Abra um Pull Request
 
 ## License
 
-Distributed under the MIT License. See `LICENSE` for more information.
-
-## Contact
-
-Manuel Pires - manuelpiresok@gmail.com
-
-Project Link: [https://github.com/manuelpires/nft-collection-generator](https://github.com/manuelpires/nft-collection-generator)
+Distribuído sob a Licença MIT. Veja `LICENSE` para mais informações.
