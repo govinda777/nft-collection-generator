@@ -31,23 +31,9 @@ class PrivyAuth {
             });
 
             this.isPrivyReady = true;
-            this.setupEventListeners();
             this.checkAuthStatus();
         } catch (error) {
             console.error('Error initializing Privy:', error);
-        }
-    }
-
-    setupEventListeners() {
-        const loginBtn = document.getElementById('loginBtn');
-        const logoutBtn = document.getElementById('logoutBtn');
-
-        if (loginBtn) {
-            loginBtn.addEventListener('click', () => this.login());
-        }
-
-        if (logoutBtn) {
-            logoutBtn.addEventListener('click', () => this.logout());
         }
     }
 
@@ -180,6 +166,16 @@ class PrivyAuth {
 document.addEventListener('DOMContentLoaded', () => {
     const auth = new PrivyAuth();
     
+    const loginBtn = document.getElementById('loginBtn');
+    if (loginBtn) {
+        loginBtn.addEventListener('click', () => auth.login());
+    }
+
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', () => auth.logout());
+    }
+
     // Make it globally accessible for debugging
     window.privyAuth = auth;
 });
